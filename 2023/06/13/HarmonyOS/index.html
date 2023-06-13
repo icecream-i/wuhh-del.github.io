@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-06-13 11:53:30</span>
+        <span class="pc">2023-06-13 12:14:40</span>
     </span>
     
     
@@ -203,6 +203,22 @@
 </ul>
 <h1 id="ArkCompiler（方舟编译器）原理解析"><a href="#ArkCompiler（方舟编译器）原理解析" class="headerlink" title="ArkCompiler（方舟编译器）原理解析"></a>ArkCompiler（方舟编译器）原理解析</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>HarmonyOS的设计目标，是成为打通手机、PC、平板、电视、车机和智能穿戴等多种设备的统一操作系统。其应用开发有多编程语言、多范式的支持需求，其中高级编程语言包括JavaScript、TypeScript、Java等，开发范式包括声明式UI范式、分布式编程范式。我们需要相应的编译器和运行时来支撑这些高级应用编程语言的高效开发、部署和运行。使应用开发者能使用同一套开发框架实现一次开发多端部署运行，并且让使用HarmonyOS设备的用户，能获得统一的用户体验。于是，ArkCompiler应运而生。</p>
 <p>ArkCompiler（方舟编译器）是组件化、可配置的多语言编译和运行平台，它既能支撑单一语言运行环境，也能支撑多种语言组合的运行环境。它目前主要支持的语言是JavaScript、TypeScript和Java。</p>
+<h2 id="ArkCompoler-架构"><a href="#ArkCompoler-架构" class="headerlink" title="ArkCompoler 架构"></a>ArkCompoler 架构</h2><p>ArkCompiler工具链实现对应语言的前端编译器，将前端开发框架的高级语言编译成统一的字节码&#x2F;二进制文件。根据不同的应用场景，通过ArkCompiler运行时解释器解释执行字节码文件或JIT&#x2F;AOT编译器编译执行对应体系架构的优化机器码，从而提升运行效率和启动性能。</p>
+<p><img src="/HarmonyOS.assets/f265337480ce13ecd5a0947a70fb96cd70a043.jpg" alt="img"></p>
+<h3 id="前端编译器"><a href="#前端编译器" class="headerlink" title="前端编译器"></a>前端编译器</h3><p>它按照语言规范，将编程语言表达的语义翻译为运行时能够理解的介质。在ArkCompiler解决方案里，这体现为ArkCompiler字节码。部分语言，也支持通过ArkCompiler的AOT Compiler组件直接将字节码编译成对应体系架构的优化机器码。</p>
+<p>:heart: ArkCompiler Bytecode：ArkCompiler 字节码（简称abc）。</p>
+<p><img src="/HarmonyOS.assets/4788f14264bf85de9b21557df4cdd5c7cf9744.jpg" alt="img"></p>
+<h4 id="前端编译器功能"><a href="#前端编译器功能" class="headerlink" title="前端编译器功能"></a>前端编译器功能</h4><p>在需要支持多种语言的ArkCompiler中，前端编译器的主要作用是在Host侧把源码生成字节码文件，这样的优点：</p>
+<ul>
+<li>利用Host强大的计算能力，能够在运行前做更多更复杂的算法优化，减少运行时的工作，提高运行效率。</li>
+<li>相比常见的JavaScript运行时，可以把端侧的编译解析过程提前到发布前，提升程序的启动性能。</li>
+</ul>
+<p><img src="/HarmonyOS.assets/5704b5f160755f989ad473e237753ada4e346f.jpg" alt="img"></p>
+<h4 id="编译优化"><a href="#编译优化" class="headerlink" title="编译优化"></a>编译优化</h4><p>ArkCompiler提供对TypeScript（TS）的原生支持。在前端编译TS源码时，会<strong>利用TS的显式类型声明</strong>，应用类型推导进行类型优化，并且<strong>将推导出的类型信息通过字节码文件保留至运行时</strong>，由此运行时可以直接利用类型信息执行快速路径。此外，静态的类型分析和推导也使得TS AOT (Ahead of Time) Compiler成为可能，静态分析得到的类型信息帮助AOT Compiler直接编译生成高质量的机器码，使得TS源码可以直接以机器码形式运行，进一步提升运行性能。</p>
+<p><img src="/HarmonyOS.assets/260254a9505c953d6e40464eff3ca2fa93e9fd.jpg" alt="img"></p>
+<h3 id="Runtime"><a href="#Runtime" class="headerlink" title="Runtime"></a>Runtime</h3><p>核心运行时主要由运行时的公共核心组件构成，包含定义字节码格式和行为的Public ISA模块，对接系统调用的ArkCompiler Base Platform模块， 支持Debugger、Profiler等工具的Common Tool模块和承载字节码文件处理的ArkCompiler File模块等。也提供了可选的语言无关的解释器、内存管理、编译器和并发等基础设施组件。</p>
+<p>各语言运行时插件则包含各语言特有的特性实现以及标准库来支撑语言的运行行为符合对应的语言规范，由各语言按需定制。</p>
+<p><img src="/HarmonyOS.assets/37c6f4a63b7a00bcfe9220a46fcd6fd41aeec8.jpg" alt="img"></p>
 
             </div>
 
