@@ -41,12 +41,75 @@
 
 
 <body>
-<div class="progress-bar-container">
-    
+.progress-bar-container {
+  position fixed
+  top 0
+  left 0
+  z-index $z-index-9
+  width 100%
 
-    
-</div>
+  if (hexo-config('pjax.enable') == true) {
 
+    .pjax-progress-bar {
+      position absolute
+      top 0
+      left 0
+      z-index $z-index-8
+      width 0
+      height 2px
+      background var(--pjax-progress-bar-color)
+      visibility hidden
+      opacity 0
+      transition-t("width, opacity", "0, 0", "0.1, 0.1", "linear")
+
+
+      &.show {
+        visibility visible
+        opacity 1
+      }
+    }
+
+
+    .pjax-progress-icon {
+      position absolute
+      top 0.4rem
+      right 0.3rem
+      z-index $z-index-8
+      color var(--text-color-3)
+      font-size 1.1rem
+      visibility hidden
+
+      +keep-tablet() {
+        top 0.3rem
+        right 0.2rem
+        font-size 1rem
+      }
+
+      &.show {
+        visibility visible
+      }
+    }
+  }
+
+  if (hexo-config('style.scroll.progress_bar') == true) {
+
+    .scroll-progress-bar {
+      position absolute
+      top 0
+      left 0
+      z-index $z-index-7
+      width 0
+      height $scroll-progress-bar-height
+      background var(--primary-color)
+      visibility hidden
+      transition-t("width", "0", "0.1", "linear")
+
+      &.hide {
+        display none !important
+      }
+    }
+  }
+}
 
 <main class="page-container">
 
@@ -55,73 +118,311 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            
-<header class="header-wrapper">
+            $logo-title-font-size = 2rem
+$pc-search-icon-font-size = 1.5rem
+$menu-bar-line-height = 2.5px
+$logo-image-box-width = 46px
 
-    <div class="header-content">
-        <div class="left">
-            
-                <a class="logo-image" href="/">
-                    <img src="/images/logo.svg">
-                </a>
-            
-            <a class="logo-title" href="/">
-               Wuyang&#39;s Blog
-            </a>
-        </div>
+.header-wrapper {
+  display flex
+  align-items center
+  justify-content center
+  box-sizing border-box
+  width 100%
+  height 100%
+  padding-top $scroll-progress-bar-height
+  background var(--background-color-1)
 
-        <div class="right">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                HOME
-                            </a>
-                        </li>
-                    
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+  hover-style(false, 0, 0)
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-        </ul>
-    </div>
+  .header-content {
+    position relative
+    z-index $z-index-5
+    display flex
+    flex-direction row
+    align-items center
+    justify-content space-between
+    width $main-content-width
+    max-width $content-max-width
+    height 100%
+    transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
 
-    <div class="window-mask"></div>
 
-</header>
+    &.has-first-screen {
+      max-width $has-fs-content-max-width
+    }
 
+    .has-toc & {
+      max-width $has-toc-content-max-width
+    }
+
+    +keep-tablet() {
+      width $main-content-width-tablet
+    }
+
+    +keep-mobile() {
+      width $main-content-width-mobile
+    }
+
+    .left {
+      display flex
+      align-items center
+      transition-t("transform", "0", "0.2", "linear")
+
+      .header-shrink & {
+        transform scale(0.72)
+        transform-origin left
+      }
+
+
+      if (hexo-config('base_info.logo_img') || hexo-config('style.logo')) {
+        .logo-image {
+          width $logo-image-box-width
+          height $logo-image-box-width
+          margin-right 8px
+
+
+          +keep-tablet() {
+            width $logo-image-box-width * 0.9
+            height $logo-image-box-width * 0.9
+          }
+
+          +keep-mobile() {
+            width $logo-image-box-width * 0.8
+            height $logo-image-box-width * 0.8
+          }
+
+          img {
+            width 100%
+            border-radius 6px
+          }
+        }
+      }
+
+      .logo-title {
+        color var(--text-color-1)
+        font-weight bold
+        font-size $logo-title-font-size
+        line-height 1
+        letter-spacing 1px
+
+        +keep-tablet() {
+          font-size $logo-title-font-size * 0.9
+        }
+
+        +keep-mobile() {
+          font-size $logo-title-font-size * 0.8
+        }
+      }
+    }
+
+
+    .right {
+
+      .pc {
+
+        .menu-list {
+          display flex
+          align-items center
+
+          +keep-tablet() {
+            display none
+          }
+
+
+          .menu-item {
+            position relative
+            float left
+            margin-left 2rem
+            color var(--text-color-3)
+            font-size 1rem
+            cursor pointer
+
+            &:first-child {
+              margin-left 0
+            }
+
+
+            a:hover
+            .active {
+
+              &::after {
+                position absolute
+                bottom -10px
+                left 50%
+                width 100%
+                height 2px
+                background var(--primary-color)
+                transform translateX(-50%)
+                content ''
+                transition-t("transform, bottom", "0, 0", "0.2, 0.2", "linear, linear")
+
+                .header-shrink & {
+                  bottom -($header-shrink-height / 2 - 12)
+                }
+              }
+            }
+
+            &.search {
+              margin-left 26px
+              font-size $pc-search-icon-font-size
+
+              i {
+                color var(--text-color-3)
+              }
+            }
+          }
+        }
+      }
+
+
+      .mobile {
+        display flex
+        align-items center
+        justify-content space-between
+
+        .icon-item {
+          position relative
+          display none
+          width 20px
+          height 20px
+          margin-left 12px
+          color var(--text-color-3)
+          font-size 18px
+          cursor pointer
+
+          i {
+            color var(--text-color-3)
+          }
+
+          &:first-child {
+            margin-left 0
+          }
+
+          +keep-tablet() {
+            display flex
+            align-items center
+            justify-content center
+          }
+        }
+
+        .menu-bar {
+
+          .menu-bar-middle {
+            position relative
+            width 18px
+            height $menu-bar-line-height
+            background var(--text-color-3)
+
+            .header-drawer-show & {
+              background transparent
+            }
+
+
+            &::before
+            &::after {
+              position absolute
+              left 0
+              width 100%
+              height $menu-bar-line-height
+              background var(--text-color-3)
+              content ''
+              transition-t("transform", "0", "0.38", "ease")
+            }
+
+
+            &::before {
+              top -6px
+
+              .header-drawer-show & {
+                transform translateY(6px) rotate(45deg)
+              }
+            }
+
+
+            &::after {
+              bottom -6px
+
+              .header-drawer-show & {
+                transform translateY(-6px) rotate(-45deg)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    position absolute
+    top 0
+    left 0
+    z-index $z-index-2
+    width 100%
+    padding $header-height 0 20px 0
+    background var(--background-color-1)
+    transform scaleY(0)
+    transform-origin top
+    transition-t("transform", "0", "0.38", "ease")
+
+    .header-drawer-show & {
+      transform scaleY(1)
+    }
+
+    .drawer-menu-list {
+      display flex
+      flex-direction column
+      align-items center
+      justify-content flex-start
+
+      .drawer-menu-item {
+        height 38px
+        margin 6px 0
+        font-size 1rem
+
+        a {
+          padding 6px 20px
+          color var(--text-color-3)
+          border-radius 20px
+
+          &:hover {
+            color var(--text-color-2)
+            border 1px solid var(--text-color-3)
+          }
+
+
+          &.active {
+            color var(--text-color-2)
+            border 1px solid var(--text-color-3)
+          }
+        }
+      }
+    }
+  }
+
+
+  .window-mask {
+    position absolute
+    top 0
+    z-index $z-index-1
+    width 100%
+    height 100vh
+    background rgba(0, 0, 0, 0.4)
+    visibility hidden
+    opacity 0
+    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease")
+
+    .header-drawer-show & {
+      visibility visible
+      opacity 1
+    }
+  }
+}
+
+.header-drawer-show {
+  overflow hidden
+}
 
         </div>
 
@@ -151,40 +452,73 @@
                             
                         </div>
                         <div class="meta-info">
-                            
-<div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        
-            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
-        
-        <span class="pc">2023-06-13 10:56:45</span>
-        <span class="mobile">2023-06-13 10:56</span>
-    </span>
-    
-        <span class="article-update-date article-meta-item">
-        <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-06-14 12:02:18</span>
-    </span>
-    
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fas fa-tags"></i>&nbsp;
-            <ul>
-                
-                    <li>
-                        <a href="/tags/Study-notes-for-HarmonyOS/">Study notes for HarmonyOS</a>&nbsp;
-                    </li>
-                
-            </ul>
-        </span>
-    
+                            .article-meta-info {
+  font-size 0.8rem
 
-    
-    
-    
-    
-</div>
+  .article-meta-item {
+    margin-right 0.6rem
+    color var(--text-color-4)
+
+    &:last-child {
+      margin-right 0
+    }
+  }
+
+  .article-date {
+
+    .mobile {
+      display none
+    }
+
+    +keep-tablet() {
+      .pc {
+        display none
+      }
+
+      .mobile {
+        display inline
+      }
+    }
+  }
+
+
+  .article-update-date {
+    +keep-tablet() {
+      display none
+    }
+  }
+
+  .article-tags
+  .article-categories {
+    display inline
+
+    ul
+    li {
+      display inline
+    }
+
+    a {
+      color var(--text-color-4)
+
+      &:hover {
+        color var(--primary-color)
+      }
+    }
+  }
+
+  .article-tags {
+    +keep-tablet() {
+      display none
+    }
+  }
+
+  .article-min2read
+  .article-wordcount {
+    +keep-mobile() {
+      display none
+    }
+  }
+}
 
                         </div>
                     </div>
@@ -204,6 +538,7 @@
 </ul>
 <h1 id="ArkCompiler（方舟编译器）"><a href="#ArkCompiler（方舟编译器）" class="headerlink" title="ArkCompiler（方舟编译器）"></a>ArkCompiler（方舟编译器）</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>HarmonyOS的设计目标，是成为打通手机、PC、平板、电视、车机和智能穿戴等多种设备的统一操作系统。其应用开发有多编程语言、多范式的支持需求，其中高级编程语言包括JavaScript、TypeScript、Java等，开发范式包括声明式UI范式、分布式编程范式。我们需要相应的编译器和运行时来支撑这些高级应用编程语言的高效开发、部署和运行。使应用开发者能使用同一套开发框架实现一次开发多端部署运行，并且让使用HarmonyOS设备的用户，能获得统一的用户体验。于是，ArkCompiler应运而生。</p>
 <p>ArkCompiler（方舟编译器）是组件化、可配置的多语言编译和运行平台，它既能支撑单一语言运行环境，也能支撑多种语言组合的运行环境。它目前主要支持的语言是JavaScript、TypeScript和Java。</p>
+<p>（2019-11-19）。</p>
 <p>:star: 编译器基本学习流程：</p>
 <ol>
 <li>编译器的基本结构</li>
@@ -249,9 +584,82 @@
 </ul>
 <h4 id="定制化需求"><a href="#定制化需求" class="headerlink" title="定制化需求"></a>定制化需求</h4><p>各个执行引擎的性能如图：</p>
 <p><img src="/../imgs/HarmonyOS/98073d739cdade11ddd8803544bc6f1981e216.jpg"></p>
-<h1 id="Maple-（多体系结构和编程语言环境）"><a href="#Maple-（多体系结构和编程语言环境）" class="headerlink" title="Maple （多体系结构和编程语言环境）"></a>Maple （多体系结构和编程语言环境）</h1><h2 id="Maple-通用模块应用手册"><a href="#Maple-通用模块应用手册" class="headerlink" title="Maple 通用模块应用手册"></a>Maple 通用模块应用手册</h2><p>文档链接：<a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler/OpenArkCompiler/blob/master/doc/cn/DeveloperGuide4Utility.md#maple%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C">doc&#x2F;cn&#x2F;DeveloperGuide4Utility.md · 方舟编译器&#x2F;OpenArkCompiler - Gitee.com<i class="fas fa-external-link-alt"></i></a></p>
+<h1 id="DriverRunner"><a href="#DriverRunner" class="headerlink" title="DriverRunner"></a>DriverRunner</h1><p>DriverRunner包含了从一个mpl文件到优化结果文件的所有过程。那么DriverRunner所要做的就像其名字所传递的直接含义，是一个驱动和运行的这么一个角色，它所要驱动的内容包含了一系列的phase，这些phase是从mpl文件到优化结果文件的过程总所必不可少的。</p>
+<h1 id="Maple-（多体系结构和编程语言环境）"><a href="#Maple-（多体系结构和编程语言环境）" class="headerlink" title="Maple （多体系结构和编程语言环境）"></a>Maple （多体系结构和编程语言环境）</h1><p><a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler/OpenArkCompiler/blob/master/doc/cn/DeveloperGuide4Utility.md#maple%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C">文档链接<i class="fas fa-external-link-alt"></i></a></p>
 <p><img src="/../imgs/HarmonyOS/image-20230614120058209.png" alt="image-20230614120058209"></p>
-<h2 id="OpenArkCompiler孵化器项目–Mapleall"><a href="#OpenArkCompiler孵化器项目–Mapleall" class="headerlink" title="OpenArkCompiler孵化器项目–Mapleall"></a>OpenArkCompiler孵化器项目–Mapleall</h2><p>FutureWei编译器分支 <a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler-incubator/mapleall">https://gitee.com/openarkcompiler-incubator/mapleall<i class="fas fa-external-link-alt"></i></a></p>
+<center><font color="gray" size="2">Maple 通用模块应用手册</font></center>
+
+<h2 id="Maple-IR"><a href="#Maple-IR" class="headerlink" title="Maple IR"></a>Maple IR</h2><h4 id="Maple-IR设计起源"><a href="#Maple-IR设计起源" class="headerlink" title="Maple IR设计起源"></a>Maple IR设计起源</h4><p>现代编译器的设计通常采用分段的设计：</p>
+<ul>
+<li>前端接受源语言的输入，输出IR；</li>
+<li>中端接受IR，输出优化或者转化之后的IR；</li>
+<li>后端接受优化或者转化之后的IR输出目标平台的汇编或者二进制文件。</li>
+</ul>
+<p><img src="/../imgs/HarmonyOS/image-20230614155947577.png" alt="image-20230614155947577"></p>
+<center><font color="gray" size="2">设计起源</font></center>
+
+<p>编译器的前端、中端和后端，分开起来看，每个阶段都可以看成是一个独立的编译器，将一种输入语言转换成另外一种。MAPLE IR在方舟编译器中端的处理也是类似的情况，方舟编译器中端接受MAPLE IR作为输入，然后先做词法分析，再做语法分析，然后才是其他介于IR的操作，包括lower等。</p>
+<p><img src="/../imgs/HarmonyOS/image-20230614155731208.png" alt="image-20230614155731208"></p>
+<center><font color="gray" size="2">Maple IR在方舟编译器中的位置</font></center>
+
+<p>[Maple IR中语句parser的调用关系追踪]: <a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85185238">https://zhuanlan.zhihu.com/p/85185238<i class="fas fa-external-link-alt"></i></a>	“分析IR的输入文件的parse过程”</p>
+<h4 id="IR-的含义"><a href="#IR-的含义" class="headerlink" title="IR 的含义"></a>IR 的含义</h4><p>IR的全称是Intermediate Representation，翻译为中间表示。从广义上讲，编译器的运行过程中，中间节点的表示，都可以称为IR。从狭义上讲，我们常说的某编译器的IR，通常是指该编译器明确定义的一个IR，这个IR通常还伴随着一种语言，这个语言用来实现这个明确定义的IR。有的时候，我们甚至不太严格区分这个明确定义的IR以及其伴随的语言，将其统称为IR。也会出现中间表示或者中间语言的说法。</p>
+<p>有些IR还会为其专门起一个名字，比如：Open64的IR通常叫做WHIRL IR，方舟编译器的IR叫做MAPLE IR。LLVM则通常就称为LLVM IR，没有给它一个专门的名字。有没有专门的名字，并不影响IR，只是称谓的问题。</p>
+<h4 id="IR的分类"><a href="#IR的分类" class="headerlink" title="IR的分类"></a>IR的分类</h4><p>广义的IR根据其组织结构，可以分为：</p>
+<ul>
+<li>Grahpical IR（图IR）：将编译器的知识编码在图中，算法通过图中的对象来描述：节点、边、列表和树。</li>
+<li>Linear IR（线性IR）：类似某些抽象及上的伪代码，相应的算法将迭代遍历简单的线性操作序列。</li>
+<li>Hybrid IR（混合IR）：结合了图IR和线性IR的要素，为的是获取两者的优势而避免其缺点。一种常见的混合表示使用底层的线性IR来表示无循环代码块，使用图来表示这些块之间的控制流。</li>
+</ul>
+<p>另外，也有（Fred Chow）将其按照组织结构分为：</p>
+<ul>
+<li>Hierarchical IR（分层IR）：该类型的IR更接近源程序语言，并且在编译器内部可以用树的形式来表达；</li>
+<li>Flat IR：该类型IR通常被看成是虚拟机的抽象指令集合，这些指令是按照顺序执行的。</li>
+</ul>
+<p>狭义的IR根据是否分层，可以分为单层IR和多层IR。多层IR往往属于Hybrid IR（混合IR），既有分层属于Hierarchical IR，也有分层属于Flat IR，所以说从整体上而言，它们可以算是混合型的IR。</p>
+<h4 id="单层IR和多层IR"><a href="#单层IR和多层IR" class="headerlink" title="单层IR和多层IR"></a>单层IR和多层IR</h4><p>通常我们说单层IR或者多层IR，指的是狭义的IR。也即编译器直接定义的IR是分为单层和多层。因为对于现代编译器而言。广义的IR在编译器内部，肯定是有多层表示的。这主要跟现在通行的编译器结构有关，在向下转换的过程中，逐层向下，这就导致了在编译器内部通常都有多层广义的IR存在。</p>
+<p>单层IR的典型代表就是LLVM，多层IR的典型代表是Open64。以Open64的多层IR为例，它的IR共分为五层：</p>
+<p><img src="/../imgs/HarmonyOS/v2-7f5655fba8ec724bd2f75237142a1653_1440w.webp" alt="img"></p>
+<p>多层IR和单层IR比较起来，具有较为明显的优点：</p>
+<ul>
+<li>可以提供更多的源程序信息；</li>
+<li>IR表达上更加地灵活，更加方便优化；</li>
+<li>使得优化算法更加地高效；</li>
+<li>可以将优化算法的负面影响降到最低。</li>
+</ul>
+<p>多层IR和单层IR比起来,具有优点的同时,也具有缺点:</p>
+<ul>
+<li>底层IR的优化器将面临更多的可能，增加了特定语义的识别难度。</li>
+</ul>
+<p>方舟编译器虽然明确提出了其IR是多层IR的设计，但是并未在其文档内部就IR的分层做明确的介绍，只是在代码层面上可以看出IR确实有分层。导致目前方舟的多层IR设计有点含混。</p>
+<h4 id="Maple-IR的结构"><a href="#Maple-IR的结构" class="headerlink" title="Maple IR的结构"></a>Maple IR的结构</h4><p>方舟编译器的MAPLE IR文档，并没有专门介绍IR结构的部分，有一个相近的部分叫“<a class="link" href="https://link.zhihu.com/?target=https://code.opensource.huaweicloud.com/HarmonyOS/OpenArkCompiler/file?ref=master&path=doc%252FMapleIRDesign.md">Program Representation<i class="fas fa-external-link-alt"></i></a>”。这部分描述了MAPLE IR的表达方式。按照文档的描述，<strong>MAPLE IR是采用的是类似C语言的形式（并不遵循C的语法），将IR分为声明语句（ declaration statements）和执行语句（executable statements）两部分，前者表达符号表信息，后者表达要执行的具体程序代码</strong>。</p>
+<p>在结构方面，结构的最顶层，每个MAPLE IR文件对应一个CU（compilation unit, 编译单元），每个MAPLE IR文件之中由全局的声明组成。这些声明内部是函数，或者叫PUs（program units）。在PUs内部是局部范围的声明和紧随其后的函数的执行代码。而MPALE 的IR中的可执行节点又分为Leaf nodes、Expression nodes和Statement nodes。将其结构用图则可表示为：</p>
+<p><img src="/../imgs/HarmonyOS/image-20230614160110806.png" alt="image-20230614160110806"></p>
+<h4 id="Maple-IR设计文档内容总结："><a href="#Maple-IR设计文档内容总结：" class="headerlink" title="Maple IR设计文档内容总结："></a>Maple IR设计文档内容总结：</h4><ul>
+<li><p>因为源程序中所有的信息都有可能对于程序的分析和优化有用，所以Maple IR将会尽最大可能的去保持源程序信息的完整性。</p>
+</li>
+<li><p>Maple IR是平台无关的。</p>
+</li>
+<li><p>Maple IR有配套的Maple VM，Maple IR可以作为Maple VM的输入，在Maple VM上执行。Maple IR不需要进一步翻译成针对某个目标处理器的机器指令，可以直接在Maple VM上执行。Maple VM是Maple IR的第一个消费者。</p>
+</li>
+<li><p>Maple IR是一个面向由多种编程语言编译来的程序的共同表示，也就是说Maple IR是可以作为多种输入语言的IR。（注：由于方舟目前只支持了Java语言，C&#x2F;C++语言的支持还在开发过程中，所以后续在不断添加新语言的过程之中，Maple的IR设计是否需要对细节进行调整？我觉得这是一个需要关注的问题。）</p>
+</li>
+<li><p>Maple IR是可扩展的，会针对新的语言支持添加新的constructs，来表示每一种语言的constructs unique。（注：和4的考虑一样，除了这个扩展，在支持新语言的时候，是否还会有其他的改动？需要关注一下。）</p>
+</li>
+<li><p>Maple IR支持所有已知的程序分析和优化操作，它可以支持不同语义层面的程序代码。</p>
+</li>
+<li><p>语言特性的分析和优化，适合在高层的IR上做。特殊目的的优化，适合在低层的IR上做。</p>
+</li>
+<li><p>最低层次的IR，在大多数时候和机器指令是一对一的关系。</p>
+</li>
+<li><p>Maple IR本质上是以树的形式来表达程序代码的。随着IR层次的不断降低，IR将会变得越来越扁平化。</p>
+</li>
+<li><p>越高层次的IR，其所支持的Opcodes越多；最底层的IR，其所支持的Opcodes都是和目标处理器的操作一对一的。</p>
+</li>
+<li><p>在高层次的IR，其所支持的程序是分层级的；随着IR层次的不断降低，其将会越来越扁平化；直到最底层的IR，程序结构将变成完全扁平的，变成由目标处理器的原始指令组成的序列。</p>
+</li>
+</ul>
+<h2 id="OpenArkCompiler孵化器项目–Mapleall"><a href="#OpenArkCompiler孵化器项目–Mapleall" class="headerlink" title="OpenArkCompiler孵化器项目–Mapleall"></a>OpenArkCompiler孵化器项目–Mapleall</h2><p>Futurewei是华为在美国的分支机构。中美贸易战之后，Futurewei和华为国内方舟编译器团队都在独立进行方舟编译器的开发，逐步衍生出了两个不同的版本，在后续会逐渐合并到开源的主分支上去。</p>
 
             </div>
 
@@ -303,89 +711,277 @@
         </div>
 
         <div class="page-main-content-bottom">
-            
-<footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy;
-            
-                <span>2020</span> -
-            
-            2023
-            
-                &nbsp;<i class="fas fa-heart icon-animate"></i>
-                &nbsp;<a href="/">Wu yang</a>
-            
-        </div>
-        
-        <div class="theme-info info-item">
-            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
-        </div>
-        
-        
-    </div>
-</footer>
+            .footer {
+  color var(--text-color-4)
+  font-size 1rem
+
+  a {
+    color var(--text-color-4)
+
+    &:hover {
+      color var(--primary-color)
+    }
+  }
+
+  .info-container {
+    display flex
+    flex-direction column
+    align-items center
+    justify-content center
+    padding-bottom 1rem
+
+    .info-item {
+      margin 0.2rem 0
+      color var(--text-color-4)
+
+      &.deploy-info {
+        display flex
+
+        a
+        .tooltip {
+          display flex
+          align-items center
+        }
+
+        img {
+          height 1.2rem
+          margin 0 0.4rem
+        }
+      }
+    }
+  }
+
+
+  .icon-animate {
+    animation icon-animate 1.2s ease-in-out infinite
+  }
+}
 
         </div>
     </div>
 
     
         <div class="post-tools">
-            <div class="post-tools-container">
-    <ul class="tools-list">
-        <!-- TOC aside toggle -->
-        
+            $li-border-radius = 0.4rem
+$li-margin-bottom = 0.8rem
 
-        <!-- go comment -->
-        
-    </ul>
-</div>
+.post-tools-container {
+  position relative
+  box-sizing border-box
+  padding-top 2rem
+
+  .tools-list {
+
+    li {
+      position relative
+      box-sizing border-box
+      width $post-tool-button-width
+      height $post-tool-button-width
+      margin-bottom $li-margin-bottom
+      color var(--text-color-3)
+      font-size 1.2rem
+      background var(--background-color-1)
+      border-radius 50%
+      cursor pointer
+
+      i {
+        color var(--text-color-3)
+      }
+
+      &:hover {
+        color var(--background-color-1)
+        background var(--primary-color)
+
+        i {
+          color var(--background-color-1)
+        }
+      }
+
+
+      &:last-child {
+        margin-bottom 0
+      }
+
+
+      hover-style(true, 1.06, 1.06)
+
+      &.toggle-show-toc {
+        display none
+
+        +keep-tablet() {
+          display none !important
+        }
+      }
+
+
+      &.go-to-comments {
+        .post-comments-count {
+          position absolute
+          top 0
+          right -1rem
+          display none
+          align-items center
+          justify-content center
+          box-sizing border-box
+          min-width 1.1rem
+          height 1.1rem
+          padding 0 0.2rem
+          color var(--badge-color)
+          font-size 12px
+          background var(--badge-background-color)
+          border-radius 0.4rem
+
+          +keep-tablet() {
+            display none !important
+          }
+        }
+      }
+    }
+  }
+}
 
         </div>
     
 
     <div class="right-bottom-side-tools">
-        <div class="side-tools-container">
-    <ul class="side-tools-list">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
+        $tools-item-width = 2.2rem
+$tools-item-font-size = 1.1rem
+$tools-item-border-radius = 0.1rem
 
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
 
-        <li class="tools-item tool-dark-light-toggle flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
+.side-tools-container {
+  position relative
 
-        <!-- rss -->
-        
+  .tools-item {
+    width $tools-item-width
+    height $tools-item-width
+    margin-bottom 0.2rem
+    color var(--text-color-3)
+    font-size $tools-item-font-size
+    background var(--background-color-1)
+    border-right none
+    border-radius $tools-item-border-radius
+    box-shadow 0.1rem 0.1rem 0.2rem var(--shadow-color)
+    cursor pointer
 
-        
-            <li class="tools-item tool-scroll-to-top flex-center">
-                <i class="fas fa-arrow-up"></i>
-            </li>
-        
+    i {
+      color var(--text-color-3)
+    }
 
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
+    &:hover {
+      color var(--background-color-1)
+      background var(--primary-color)
+      box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
 
-    <ul class="exposed-tools-list">
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
-        
-    </ul>
-</div>
+      i {
+        color var(--background-color-1)
+      }
+    }
+
+    +keep-tablet() {
+      width $tools-item-width * 0.9
+      height $tools-item-width * 0.9
+      margin-bottom 0.2rem
+      font-size $tools-item-font-size * 0.9
+    }
+
+    &.rss {
+
+      a {
+        width 100%
+        height 100%
+        border-radius $tools-item-border-radius
+
+        &:hover {
+          color var(--background-color-1)
+          background var(--primary-color)
+          box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
+        }
+      }
+    }
+  }
+
+
+  .side-tools-list {
+    transform translateX(100%)
+    opacity 0
+    transition-t("transform, opacity", "0, 0", "0.2, 0.2", "linear, linear")
+
+    &.show {
+      transform translateX(0)
+      opacity 1
+    }
+  }
+
+
+  .exposed-tools-list {
+
+    if (hexo-config('style.scroll.percent') == true) {
+      .tool-scroll-to-top {
+        display none
+
+        &.show {
+          display flex
+        }
+
+        &:hover {
+
+          .percent {
+            display none
+          }
+
+          .arrow-up {
+            display flex
+          }
+        }
+
+        .arrow-up {
+          display none
+        }
+
+        .percent {
+          display flex
+          font-size 1rem
+        }
+      }
+    }
+  }
+}
 
     </div>
 
-    <div class="zoom-in-image-mask">
-    <img class="zoom-in-image">
-</div>
+    .zoom-in-image-mask {
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index $z-index-8
+  display flex
+  align-items center
+  justify-content center
+  box-sizing border-box
+  background rgba(0, 0, 0, 0)
+  visibility hidden
+  transition-t("visibility, background", "0, 0", "0.3, 0.3", "linear, linear")
+
+  &.show {
+    background rgba(0, 0, 0, 0.5)
+    visibility visible
+
+    .zoom-in-image {
+      cursor zoom-out
+    }
+  }
+
+  .zoom-in-image {
+    position absolute
+    z-index $z-index-9
+    transform-origin center center
+    will-change transform
+    transition-t("transform", "0", "0.3", "linear")
+  }
+}
 
 
     
