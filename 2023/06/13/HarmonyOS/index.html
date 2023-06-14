@@ -41,75 +41,12 @@
 
 
 <body>
-.progress-bar-container {
-  position fixed
-  top 0
-  left 0
-  z-index $z-index-9
-  width 100%
+<div class="progress-bar-container">
+    
 
-  if (hexo-config('pjax.enable') == true) {
+    
+</div>
 
-    .pjax-progress-bar {
-      position absolute
-      top 0
-      left 0
-      z-index $z-index-8
-      width 0
-      height 2px
-      background var(--pjax-progress-bar-color)
-      visibility hidden
-      opacity 0
-      transition-t("width, opacity", "0, 0", "0.1, 0.1", "linear")
-
-
-      &.show {
-        visibility visible
-        opacity 1
-      }
-    }
-
-
-    .pjax-progress-icon {
-      position absolute
-      top 0.4rem
-      right 0.3rem
-      z-index $z-index-8
-      color var(--text-color-3)
-      font-size 1.1rem
-      visibility hidden
-
-      +keep-tablet() {
-        top 0.3rem
-        right 0.2rem
-        font-size 1rem
-      }
-
-      &.show {
-        visibility visible
-      }
-    }
-  }
-
-  if (hexo-config('style.scroll.progress_bar') == true) {
-
-    .scroll-progress-bar {
-      position absolute
-      top 0
-      left 0
-      z-index $z-index-7
-      width 0
-      height $scroll-progress-bar-height
-      background var(--primary-color)
-      visibility hidden
-      transition-t("width", "0", "0.1", "linear")
-
-      &.hide {
-        display none !important
-      }
-    }
-  }
-}
 
 <main class="page-container">
 
@@ -118,311 +55,73 @@
     <div class="page-main-content">
 
         <div class="page-main-content-top">
-            $logo-title-font-size = 2rem
-$pc-search-icon-font-size = 1.5rem
-$menu-bar-line-height = 2.5px
-$logo-image-box-width = 46px
+            
+<header class="header-wrapper">
 
-.header-wrapper {
-  display flex
-  align-items center
-  justify-content center
-  box-sizing border-box
-  width 100%
-  height 100%
-  padding-top $scroll-progress-bar-height
-  background var(--background-color-1)
+    <div class="header-content">
+        <div class="left">
+            
+                <a class="logo-image" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="logo-title" href="/">
+               Wuyang&#39;s Blog
+            </a>
+        </div>
 
-  hover-style(false, 0, 0)
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  .header-content {
-    position relative
-    z-index $z-index-5
-    display flex
-    flex-direction row
-    align-items center
-    justify-content space-between
-    width $main-content-width
-    max-width $content-max-width
-    height 100%
-    transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
 
+    <div class="window-mask"></div>
 
-    &.has-first-screen {
-      max-width $has-fs-content-max-width
-    }
+</header>
 
-    .has-toc & {
-      max-width $has-toc-content-max-width
-    }
-
-    +keep-tablet() {
-      width $main-content-width-tablet
-    }
-
-    +keep-mobile() {
-      width $main-content-width-mobile
-    }
-
-    .left {
-      display flex
-      align-items center
-      transition-t("transform", "0", "0.2", "linear")
-
-      .header-shrink & {
-        transform scale(0.72)
-        transform-origin left
-      }
-
-
-      if (hexo-config('base_info.logo_img') || hexo-config('style.logo')) {
-        .logo-image {
-          width $logo-image-box-width
-          height $logo-image-box-width
-          margin-right 8px
-
-
-          +keep-tablet() {
-            width $logo-image-box-width * 0.9
-            height $logo-image-box-width * 0.9
-          }
-
-          +keep-mobile() {
-            width $logo-image-box-width * 0.8
-            height $logo-image-box-width * 0.8
-          }
-
-          img {
-            width 100%
-            border-radius 6px
-          }
-        }
-      }
-
-      .logo-title {
-        color var(--text-color-1)
-        font-weight bold
-        font-size $logo-title-font-size
-        line-height 1
-        letter-spacing 1px
-
-        +keep-tablet() {
-          font-size $logo-title-font-size * 0.9
-        }
-
-        +keep-mobile() {
-          font-size $logo-title-font-size * 0.8
-        }
-      }
-    }
-
-
-    .right {
-
-      .pc {
-
-        .menu-list {
-          display flex
-          align-items center
-
-          +keep-tablet() {
-            display none
-          }
-
-
-          .menu-item {
-            position relative
-            float left
-            margin-left 2rem
-            color var(--text-color-3)
-            font-size 1rem
-            cursor pointer
-
-            &:first-child {
-              margin-left 0
-            }
-
-
-            a:hover
-            .active {
-
-              &::after {
-                position absolute
-                bottom -10px
-                left 50%
-                width 100%
-                height 2px
-                background var(--primary-color)
-                transform translateX(-50%)
-                content ''
-                transition-t("transform, bottom", "0, 0", "0.2, 0.2", "linear, linear")
-
-                .header-shrink & {
-                  bottom -($header-shrink-height / 2 - 12)
-                }
-              }
-            }
-
-            &.search {
-              margin-left 26px
-              font-size $pc-search-icon-font-size
-
-              i {
-                color var(--text-color-3)
-              }
-            }
-          }
-        }
-      }
-
-
-      .mobile {
-        display flex
-        align-items center
-        justify-content space-between
-
-        .icon-item {
-          position relative
-          display none
-          width 20px
-          height 20px
-          margin-left 12px
-          color var(--text-color-3)
-          font-size 18px
-          cursor pointer
-
-          i {
-            color var(--text-color-3)
-          }
-
-          &:first-child {
-            margin-left 0
-          }
-
-          +keep-tablet() {
-            display flex
-            align-items center
-            justify-content center
-          }
-        }
-
-        .menu-bar {
-
-          .menu-bar-middle {
-            position relative
-            width 18px
-            height $menu-bar-line-height
-            background var(--text-color-3)
-
-            .header-drawer-show & {
-              background transparent
-            }
-
-
-            &::before
-            &::after {
-              position absolute
-              left 0
-              width 100%
-              height $menu-bar-line-height
-              background var(--text-color-3)
-              content ''
-              transition-t("transform", "0", "0.38", "ease")
-            }
-
-
-            &::before {
-              top -6px
-
-              .header-drawer-show & {
-                transform translateY(6px) rotate(45deg)
-              }
-            }
-
-
-            &::after {
-              bottom -6px
-
-              .header-drawer-show & {
-                transform translateY(-6px) rotate(-45deg)
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  .header-drawer {
-    position absolute
-    top 0
-    left 0
-    z-index $z-index-2
-    width 100%
-    padding $header-height 0 20px 0
-    background var(--background-color-1)
-    transform scaleY(0)
-    transform-origin top
-    transition-t("transform", "0", "0.38", "ease")
-
-    .header-drawer-show & {
-      transform scaleY(1)
-    }
-
-    .drawer-menu-list {
-      display flex
-      flex-direction column
-      align-items center
-      justify-content flex-start
-
-      .drawer-menu-item {
-        height 38px
-        margin 6px 0
-        font-size 1rem
-
-        a {
-          padding 6px 20px
-          color var(--text-color-3)
-          border-radius 20px
-
-          &:hover {
-            color var(--text-color-2)
-            border 1px solid var(--text-color-3)
-          }
-
-
-          &.active {
-            color var(--text-color-2)
-            border 1px solid var(--text-color-3)
-          }
-        }
-      }
-    }
-  }
-
-
-  .window-mask {
-    position absolute
-    top 0
-    z-index $z-index-1
-    width 100%
-    height 100vh
-    background rgba(0, 0, 0, 0.4)
-    visibility hidden
-    opacity 0
-    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease")
-
-    .header-drawer-show & {
-      visibility visible
-      opacity 1
-    }
-  }
-}
-
-.header-drawer-show {
-  overflow hidden
-}
 
         </div>
 
@@ -452,73 +151,40 @@ $logo-image-box-width = 46px
                             
                         </div>
                         <div class="meta-info">
-                            .article-meta-info {
-  font-size 0.8rem
+                            
+<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        
+            <i class="fa-regular fa-calendar-plus"></i>&nbsp;
+        
+        <span class="pc">2023-06-13 10:56:45</span>
+        <span class="mobile">2023-06-13 10:56</span>
+    </span>
+    
+        <span class="article-update-date article-meta-item">
+        <i class="fas fa-file-pen"></i>&nbsp;
+        <span class="pc">2023-06-14 17:56:34</span>
+    </span>
+    
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Study-notes-for-HarmonyOS/">Study notes for HarmonyOS</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
 
-  .article-meta-item {
-    margin-right 0.6rem
-    color var(--text-color-4)
-
-    &:last-child {
-      margin-right 0
-    }
-  }
-
-  .article-date {
-
-    .mobile {
-      display none
-    }
-
-    +keep-tablet() {
-      .pc {
-        display none
-      }
-
-      .mobile {
-        display inline
-      }
-    }
-  }
-
-
-  .article-update-date {
-    +keep-tablet() {
-      display none
-    }
-  }
-
-  .article-tags
-  .article-categories {
-    display inline
-
-    ul
-    li {
-      display inline
-    }
-
-    a {
-      color var(--text-color-4)
-
-      &:hover {
-        color var(--primary-color)
-      }
-    }
-  }
-
-  .article-tags {
-    +keep-tablet() {
-      display none
-    }
-  }
-
-  .article-min2read
-  .article-wordcount {
-    +keep-mobile() {
-      display none
-    }
-  }
-}
+    
+    
+    
+    
+</div>
 
                         </div>
                     </div>
@@ -585,6 +251,7 @@ $logo-image-box-width = 46px
 <h4 id="定制化需求"><a href="#定制化需求" class="headerlink" title="定制化需求"></a>定制化需求</h4><p>各个执行引擎的性能如图：</p>
 <p><img src="/../imgs/HarmonyOS/98073d739cdade11ddd8803544bc6f1981e216.jpg"></p>
 <h1 id="DriverRunner"><a href="#DriverRunner" class="headerlink" title="DriverRunner"></a>DriverRunner</h1><p>DriverRunner包含了从一个mpl文件到优化结果文件的所有过程。那么DriverRunner所要做的就像其名字所传递的直接含义，是一个驱动和运行的这么一个角色，它所要驱动的内容包含了一系列的phase，这些phase是从mpl文件到优化结果文件的过程总所必不可少的。</p>
+<p><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/82388852">DriverRunner源码分析<i class="fas fa-external-link-alt"></i></a></p>
 <h1 id="Maple-（多体系结构和编程语言环境）"><a href="#Maple-（多体系结构和编程语言环境）" class="headerlink" title="Maple （多体系结构和编程语言环境）"></a>Maple （多体系结构和编程语言环境）</h1><p><a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler/OpenArkCompiler/blob/master/doc/cn/DeveloperGuide4Utility.md#maple%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C">文档链接<i class="fas fa-external-link-alt"></i></a></p>
 <p><img src="/../imgs/HarmonyOS/image-20230614120058209.png" alt="image-20230614120058209"></p>
 <center><font color="gray" size="2">Maple 通用模块应用手册</font></center>
@@ -602,7 +269,9 @@ $logo-image-box-width = 46px
 <p><img src="/../imgs/HarmonyOS/image-20230614155731208.png" alt="image-20230614155731208"></p>
 <center><font color="gray" size="2">Maple IR在方舟编译器中的位置</font></center>
 
-<p>[Maple IR中语句parser的调用关系追踪]: <a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85185238">https://zhuanlan.zhihu.com/p/85185238<i class="fas fa-external-link-alt"></i></a>	“分析IR的输入文件的parse过程”</p>
+<p><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85492407">Maple IR中常见的几个类介绍<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85185238">Maple IR中语句parser的调用关系追踪<i class="fas fa-external-link-alt"></i></a></p>
+<p><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88419364">Maple IR理论基础<i class="fas fa-external-link-alt"></i></a></p>
 <h4 id="IR-的含义"><a href="#IR-的含义" class="headerlink" title="IR 的含义"></a>IR 的含义</h4><p>IR的全称是Intermediate Representation，翻译为中间表示。从广义上讲，编译器的运行过程中，中间节点的表示，都可以称为IR。从狭义上讲，我们常说的某编译器的IR，通常是指该编译器明确定义的一个IR，这个IR通常还伴随着一种语言，这个语言用来实现这个明确定义的IR。有的时候，我们甚至不太严格区分这个明确定义的IR以及其伴随的语言，将其统称为IR。也会出现中间表示或者中间语言的说法。</p>
 <p>有些IR还会为其专门起一个名字，比如：Open64的IR通常叫做WHIRL IR，方舟编译器的IR叫做MAPLE IR。LLVM则通常就称为LLVM IR，没有给它一个专门的名字。有没有专门的名字，并不影响IR，只是称谓的问题。</p>
 <h4 id="IR的分类"><a href="#IR的分类" class="headerlink" title="IR的分类"></a>IR的分类</h4><p>广义的IR根据其组织结构，可以分为：</p>
@@ -659,7 +328,16 @@ $logo-image-box-width = 46px
 <li><p>在高层次的IR，其所支持的程序是分层级的；随着IR层次的不断降低，其将会越来越扁平化；直到最底层的IR，程序结构将变成完全扁平的，变成由目标处理器的原始指令组成的序列。</p>
 </li>
 </ul>
-<h2 id="OpenArkCompiler孵化器项目–Mapleall"><a href="#OpenArkCompiler孵化器项目–Mapleall" class="headerlink" title="OpenArkCompiler孵化器项目–Mapleall"></a>OpenArkCompiler孵化器项目–Mapleall</h2><p>Futurewei是华为在美国的分支机构。中美贸易战之后，Futurewei和华为国内方舟编译器团队都在独立进行方舟编译器的开发，逐步衍生出了两个不同的版本，在后续会逐渐合并到开源的主分支上去。</p>
+<h1 id="OpenArkCompiler孵化器项目–Mapleall"><a href="#OpenArkCompiler孵化器项目–Mapleall" class="headerlink" title="OpenArkCompiler孵化器项目–Mapleall"></a>OpenArkCompiler孵化器项目–Mapleall</h1><p>Futurewei是华为在美国的分支机构。中美贸易战之后，Futurewei和华为国内方舟编译器团队都在独立进行方舟编译器的开发，逐步衍生出了两个不同的版本，在后续会逐渐合并到开源的主分支上去。</p>
+<h2 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h2><p>设 <strong>MAPLE_ROOT</strong> 为项目的根目录，则有如下目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$MAPLE_ROOT</span><br><span class="line">      README.md    : this file</span><br><span class="line">      Copyright    : Copyright file</span><br><span class="line">      license      : Mulan license file</span><br><span class="line">      doc          : MapleIR documentation</span><br><span class="line">                   : tutorial &amp; FAQ</span><br><span class="line">      mapleall     : maple compiler source</span><br><span class="line">      maple_engine : maple engine opcode header file</span><br><span class="line">      bin/ast2mpl  : C frontend: clangAST to MapleIR</span><br><span class="line">      tools        : ninja, gn and clangfe for C frontend</span><br><span class="line">                   : downloaded by setup_tools.sh</span><br><span class="line">      Makefile     : makefile</span><br><span class="line">      build        : environment set up and build files</span><br><span class="line">      BUILD.gn     : gn build file</span><br><span class="line">      bin          : maple executables during make install</span><br><span class="line">      out          : created during make</span><br></pre></td></tr></table></figure>
+
+<h3 id="mapleall"><a href="#mapleall" class="headerlink" title="mapleall"></a>mapleall</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$mapleall</span><br><span class="line">	- deplibs</span><br><span class="line">		libmplutil.a	: 用到的静态库文件</span><br><span class="line">	- maple_be	</span><br><span class="line">		: support maple_engine,ark target;</span><br><span class="line">		: implement MmplLowerer::LowerRegassign</span><br><span class="line">		: Fix missing EmitBytes of getpropbyname</span><br><span class="line">	- maple_driver	:	PIC support for RISC-V</span><br><span class="line">	- maple_ipa	:	add phase ti (type inference) for javascript.</span><br><span class="line">	- maple_ir	:	fix PTY_dynf64 constant folding for negative operate</span><br><span class="line">	- maple_phase	:	Implement analysis-result dependencies among mapleme&#x27;s phases such that it will start from beginning whenever CFG is invalidated</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+
+<p>.a 就是<strong>archive</strong>, 也就相当于windows的VC下编译的lib文件, 俗称静态库文件. .o文件是链接文件，.a是静态库文件，靠.o文件生成，作为一个库为外部程序提供函数，接口。A 文件包含可以被 C&#x2F;C++ 源文件引用的函数库和头文件。它可能存储几个函数，也可能包含整个函数库。文件通常由 GNU <strong>ar</strong>实用程序创建。</p>
+<p>RISC-V：RISC-V（发音为“risk-five”）是一个<strong>基于精简指令集（RISC）原则的开源指令集架构（ISA）</strong>。 与大多数指令集相比，RISC-V指令集可以自由地用于任何目的，允许任何人设计、制造和销售RISC-V芯片和软件。</p>
+<h3 id="bin-x2F-ast2mpl"><a href="#bin-x2F-ast2mpl" class="headerlink" title="bin&#x2F;ast2mpl"></a>bin&#x2F;ast2mpl</h3><h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>从driverrunner，查看ir</p>
+<p>从ir的parser追踪中</p>
 
             </div>
 
@@ -711,277 +389,89 @@ $logo-image-box-width = 46px
         </div>
 
         <div class="page-main-content-bottom">
-            .footer {
-  color var(--text-color-4)
-  font-size 1rem
-
-  a {
-    color var(--text-color-4)
-
-    &:hover {
-      color var(--primary-color)
-    }
-  }
-
-  .info-container {
-    display flex
-    flex-direction column
-    align-items center
-    justify-content center
-    padding-bottom 1rem
-
-    .info-item {
-      margin 0.2rem 0
-      color var(--text-color-4)
-
-      &.deploy-info {
-        display flex
-
-        a
-        .tooltip {
-          display flex
-          align-items center
-        }
-
-        img {
-          height 1.2rem
-          margin 0 0.4rem
-        }
-      }
-    }
-  }
-
-
-  .icon-animate {
-    animation icon-animate 1.2s ease-in-out infinite
-  }
-}
+            
+<footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+                <span>2020</span> -
+            
+            2023
+            
+                &nbsp;<i class="fas fa-heart icon-animate"></i>
+                &nbsp;<a href="/">Wu yang</a>
+            
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.6.1</a>
+        </div>
+        
+        
+    </div>
+</footer>
 
         </div>
     </div>
 
     
         <div class="post-tools">
-            $li-border-radius = 0.4rem
-$li-margin-bottom = 0.8rem
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
+        
 
-.post-tools-container {
-  position relative
-  box-sizing border-box
-  padding-top 2rem
-
-  .tools-list {
-
-    li {
-      position relative
-      box-sizing border-box
-      width $post-tool-button-width
-      height $post-tool-button-width
-      margin-bottom $li-margin-bottom
-      color var(--text-color-3)
-      font-size 1.2rem
-      background var(--background-color-1)
-      border-radius 50%
-      cursor pointer
-
-      i {
-        color var(--text-color-3)
-      }
-
-      &:hover {
-        color var(--background-color-1)
-        background var(--primary-color)
-
-        i {
-          color var(--background-color-1)
-        }
-      }
-
-
-      &:last-child {
-        margin-bottom 0
-      }
-
-
-      hover-style(true, 1.06, 1.06)
-
-      &.toggle-show-toc {
-        display none
-
-        +keep-tablet() {
-          display none !important
-        }
-      }
-
-
-      &.go-to-comments {
-        .post-comments-count {
-          position absolute
-          top 0
-          right -1rem
-          display none
-          align-items center
-          justify-content center
-          box-sizing border-box
-          min-width 1.1rem
-          height 1.1rem
-          padding 0 0.2rem
-          color var(--badge-color)
-          font-size 12px
-          background var(--badge-background-color)
-          border-radius 0.4rem
-
-          +keep-tablet() {
-            display none !important
-          }
-        }
-      }
-    }
-  }
-}
+        <!-- go comment -->
+        
+    </ul>
+</div>
 
         </div>
     
 
     <div class="right-bottom-side-tools">
-        $tools-item-width = 2.2rem
-$tools-item-font-size = 1.1rem
-$tools-item-border-radius = 0.1rem
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
 
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
 
-.side-tools-container {
-  position relative
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
 
-  .tools-item {
-    width $tools-item-width
-    height $tools-item-width
-    margin-bottom 0.2rem
-    color var(--text-color-3)
-    font-size $tools-item-font-size
-    background var(--background-color-1)
-    border-right none
-    border-radius $tools-item-border-radius
-    box-shadow 0.1rem 0.1rem 0.2rem var(--shadow-color)
-    cursor pointer
+        <!-- rss -->
+        
 
-    i {
-      color var(--text-color-3)
-    }
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
 
-    &:hover {
-      color var(--background-color-1)
-      background var(--primary-color)
-      box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
 
-      i {
-        color var(--background-color-1)
-      }
-    }
-
-    +keep-tablet() {
-      width $tools-item-width * 0.9
-      height $tools-item-width * 0.9
-      margin-bottom 0.2rem
-      font-size $tools-item-font-size * 0.9
-    }
-
-    &.rss {
-
-      a {
-        width 100%
-        height 100%
-        border-radius $tools-item-border-radius
-
-        &:hover {
-          color var(--background-color-1)
-          background var(--primary-color)
-          box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
-        }
-      }
-    }
-  }
-
-
-  .side-tools-list {
-    transform translateX(100%)
-    opacity 0
-    transition-t("transform, opacity", "0, 0", "0.2, 0.2", "linear, linear")
-
-    &.show {
-      transform translateX(0)
-      opacity 1
-    }
-  }
-
-
-  .exposed-tools-list {
-
-    if (hexo-config('style.scroll.percent') == true) {
-      .tool-scroll-to-top {
-        display none
-
-        &.show {
-          display flex
-        }
-
-        &:hover {
-
-          .percent {
-            display none
-          }
-
-          .arrow-up {
-            display flex
-          }
-        }
-
-        .arrow-up {
-          display none
-        }
-
-        .percent {
-          display flex
-          font-size 1rem
-        }
-      }
-    }
-  }
-}
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
 
     </div>
 
-    .zoom-in-image-mask {
-  position fixed
-  top 0
-  right 0
-  bottom 0
-  left 0
-  z-index $z-index-8
-  display flex
-  align-items center
-  justify-content center
-  box-sizing border-box
-  background rgba(0, 0, 0, 0)
-  visibility hidden
-  transition-t("visibility, background", "0, 0", "0.3, 0.3", "linear, linear")
-
-  &.show {
-    background rgba(0, 0, 0, 0.5)
-    visibility visible
-
-    .zoom-in-image {
-      cursor zoom-out
-    }
-  }
-
-  .zoom-in-image {
-    position absolute
-    z-index $z-index-9
-    transform-origin center center
-    will-change transform
-    transition-t("transform", "0", "0.3", "linear")
-  }
-}
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
 
 
     
