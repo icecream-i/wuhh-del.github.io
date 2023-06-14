@@ -163,7 +163,7 @@
     
         <span class="article-update-date article-meta-item">
         <i class="fas fa-file-pen"></i>&nbsp;
-        <span class="pc">2023-06-14 10:50:01</span>
+        <span class="pc">2023-06-14 12:02:18</span>
     </span>
     
     
@@ -202,7 +202,7 @@
 <li><a class="link" target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96468879">https://zhuanlan.zhihu.com/p/96468879<i class="fas fa-external-link-alt"></i></a></li>
 <li><a class="link" target="_blank" rel="noopener" href="https://developer.harmonyos.com/cn/develop/arkCompiler/">方舟编译器ArkCompiler-HarmonyOS SDK-HarmonyOS应用开发官网<i class="fas fa-external-link-alt"></i></a></li>
 </ul>
-<h1 id="ArkCompiler（方舟编译器）原理解析"><a href="#ArkCompiler（方舟编译器）原理解析" class="headerlink" title="ArkCompiler（方舟编译器）原理解析"></a>ArkCompiler（方舟编译器）原理解析</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>HarmonyOS的设计目标，是成为打通手机、PC、平板、电视、车机和智能穿戴等多种设备的统一操作系统。其应用开发有多编程语言、多范式的支持需求，其中高级编程语言包括JavaScript、TypeScript、Java等，开发范式包括声明式UI范式、分布式编程范式。我们需要相应的编译器和运行时来支撑这些高级应用编程语言的高效开发、部署和运行。使应用开发者能使用同一套开发框架实现一次开发多端部署运行，并且让使用HarmonyOS设备的用户，能获得统一的用户体验。于是，ArkCompiler应运而生。</p>
+<h1 id="ArkCompiler（方舟编译器）"><a href="#ArkCompiler（方舟编译器）" class="headerlink" title="ArkCompiler（方舟编译器）"></a>ArkCompiler（方舟编译器）</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>HarmonyOS的设计目标，是成为打通手机、PC、平板、电视、车机和智能穿戴等多种设备的统一操作系统。其应用开发有多编程语言、多范式的支持需求，其中高级编程语言包括JavaScript、TypeScript、Java等，开发范式包括声明式UI范式、分布式编程范式。我们需要相应的编译器和运行时来支撑这些高级应用编程语言的高效开发、部署和运行。使应用开发者能使用同一套开发框架实现一次开发多端部署运行，并且让使用HarmonyOS设备的用户，能获得统一的用户体验。于是，ArkCompiler应运而生。</p>
 <p>ArkCompiler（方舟编译器）是组件化、可配置的多语言编译和运行平台，它既能支撑单一语言运行环境，也能支撑多种语言组合的运行环境。它目前主要支持的语言是JavaScript、TypeScript和Java。</p>
 <p>:star: 编译器基本学习流程：</p>
 <ol>
@@ -248,9 +248,11 @@
 <li><strong>JIT Compiler</strong>：JIT编译器一般需要运行时执行代码一段时间，Profiler生成了profiling数据之后，根据profiling数据即时编译生成高质量的机器码（上图Optimized Code II）来运行。（JIT可以根据代码执行情况实时编译生成最优机器指令）</li>
 </ul>
 <h4 id="定制化需求"><a href="#定制化需求" class="headerlink" title="定制化需求"></a>定制化需求</h4><p>各个执行引擎的性能如图：</p>
-<img src="/2023/06/13/HarmonyOS/imgs/HarmonyOS/98073d739cdade11ddd8803544bc6f1981e216.jpg" style="zoom:50%;">
+<p><img src="/../imgs/HarmonyOS/98073d739cdade11ddd8803544bc6f1981e216.jpg"></p>
+<h1 id="Maple-（多体系结构和编程语言环境）"><a href="#Maple-（多体系结构和编程语言环境）" class="headerlink" title="Maple （多体系结构和编程语言环境）"></a>Maple （多体系结构和编程语言环境）</h1><h2 id="Maple-通用模块应用手册"><a href="#Maple-通用模块应用手册" class="headerlink" title="Maple 通用模块应用手册"></a>Maple 通用模块应用手册</h2><p>文档链接：<a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler/OpenArkCompiler/blob/master/doc/cn/DeveloperGuide4Utility.md#maple%E9%80%9A%E7%94%A8%E6%A8%A1%E5%9D%97%E5%BA%94%E7%94%A8%E6%89%8B%E5%86%8C">doc&#x2F;cn&#x2F;DeveloperGuide4Utility.md · 方舟编译器&#x2F;OpenArkCompiler - Gitee.com<i class="fas fa-external-link-alt"></i></a></p>
+<p><img src="/../imgs/HarmonyOS/image-20230614120058209.png" alt="image-20230614120058209"></p>
+<h2 id="OpenArkCompiler孵化器项目–Mapleall"><a href="#OpenArkCompiler孵化器项目–Mapleall" class="headerlink" title="OpenArkCompiler孵化器项目–Mapleall"></a>OpenArkCompiler孵化器项目–Mapleall</h2><p>FutureWei编译器分支 <a class="link" target="_blank" rel="noopener" href="https://gitee.com/openarkcompiler-incubator/mapleall">https://gitee.com/openarkcompiler-incubator/mapleall<i class="fas fa-external-link-alt"></i></a></p>
 
-<h1 id="Maple-通用模块应用手册"><a href="#Maple-通用模块应用手册" class="headerlink" title="Maple 通用模块应用手册"></a>Maple 通用模块应用手册</h1>
             </div>
 
             
